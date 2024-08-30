@@ -1,0 +1,142 @@
+﻿@* @page "/"
+@inject InteractiveRPG.Services.GameState GameState
+@inject InteractiveRPG.Services.DialogueService DialogueService
+@inject InteractiveRPG.Services.ImageGenerationService ImageGenerationService
+
+<div class="game-container">
+    <div class="background-image" style="background-image: url('@backgroundImage')"></div>
+
+    @if (GameState.CurrentCharacter == null)
+    {
+        <div class="character-creation">
+            <h2>Create Your Character</h2>
+            <EditForm Model="@newCharacter" OnValidSubmit="@CreateCharacter">
+                <InputText @bind-Value="newCharacter.Name" placeholder="Character Name" />
+                <InputSelect @bind-Value="newCharacter.Class">
+                    <option value="">Select Class</option>
+                    <option value="Warrior">Warrior</option>
+                    <option value="Mage">Mage</option>
+                    <option value="Rogue">Rogue</option>
+                </InputSelect>
+                <button type="submit">Create Character</button>
+            </EditForm>
+        </div>
+    }
+    else
+    {
+        <div class="game-interface">
+            <div class="dialogue-box ai-dialogue">
+                @foreach (var dialogue in GameState.DialogueHistory.Where(d => d.StartsWith("AI:")))
+                {
+                    <p>@dialogue</p>
+                }
+            </div>
+            <div class="dialogue-box player-dialogue">
+                @foreach (var dialogue in GameState.DialogueHistory.Where(d => d.StartsWith("Player:")))
+                {
+                    <p>@dialogue</p>
+                }
+            </div>
+            <div class="input-area">
+                <input @bind="playerInput" @bind:event="oninput" @onkeyup="HandleKeyUp" placeholder="Enter your action..." />
+                <button @onclick="SendPlayerInput">Send</button>
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    private InteractiveRPG.Models.Character newCharacter = new InteractiveRPG.Models.Character();
+    private string playerInput = "";
+    private string backgroundImage = "https://via.placeholder.com/800x400?text=Welcome";
+
+    private async Task CreateCharacter()
+    {
+        GameState.CreateCharacter(newCharacter.Name, newCharacter.Class);
+        await UpdateBackgroundImage("Character created in a mystical forest");
+    }
+
+    private async Task SendPlayerInput()
+    {
+        if (!string.IsNullOrWhiteSpace(playerInput))
+        {
+            GameState.AddDialogue(playerInput, false);
+            string aiResponse = await DialogueService.GetAIResponse(playerInput);
+            GameState.AddDialogue(aiResponse, true);
+            await UpdateBackgroundImage(aiResponse);
+            playerInput = "";
+        }
+    }
+
+    private async Task HandleKeyUp(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            await SendPlayerInput();
+        }
+    }
+
+    private async Task UpdateBackgroundImage(string prompt)
+    {
+        backgroundImage = await ImageGenerationService.GenerateImage(prompt);
+    }
+}
+
+<style>
+    .game-container {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .background-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-size: cover;
+        background-position: center;
+        opacity: 0.5;
+        z-index: -1;
+    }
+
+    .game-interface {
+        width: 80%;
+        height: 80%;
+        display: flex;
+        flex-direction: column;
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 10px;
+        padding: 20px;
+    }
+
+    .dialogue-box {
+        flex: 1;
+        overflow-y: auto;
+        margin-bottom: 10px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .input-area {
+        display: flex;
+    }
+
+    .input-area input {
+        flex: 1;
+        padding: 5px;
+        margin-right: 10px;
+    }
+
+    .character-creation {
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 20px;
+        border-radius: 10px;
+    }
+</style> *@
