@@ -7,8 +7,3 @@ It is set at Meliá Palma Bay Hotell in Palma, Mallorca during contemporary time
 The story
 should be about an AI conference gone terribly wrong and I as the participant has to make it out of Palma alive.
 
-The character
-name: John Doe
-role: developer
-personality: stubborn, optimistic, intelligent, not very charismatic.
-
