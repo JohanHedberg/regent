@@ -3,22 +3,26 @@
 @using Microsoft.AspNetCore.SignalR.Client
 @inject NavigationManager Navigation
 
-<h1 style="text-align: center;">AI-Driven RPG Game</h1>
+<div class="main-container">
 
-<div style="margin-top: 20px;">
-    <h2>Narrative</h2>
-    <p>@NarratorText</p>
-</div>
+    <h1 style="text-align: center;">AI-Driven RPG Game</h1>
 
-<div style="margin-top: 20px;">
-    <h3>Your Character</h3>
-    <img src="https://via.placeholder.com/100" alt="Character Avatar" style="border-radius: 50%;" />
-    <p><strong>@CharacterName</strong></p>
-</div>
+    <div style="margin-top: 20px;">
+        <h2>Narrative</h2>
+        <p>@NarratorText</p>
+    </div>
 
-<div style="margin-top: 20px;">
-    <h3>Your Action</h3>
-    <input @bind="UserAction" @onkeypress="HandleKeyPress" placeholder="Type your action and press Enter" style="width: 100%; padding: 10px;" />
+    <div style="margin-top: 20px;">
+        <h3>Your Character</h3>
+        <img src="https://via.placeholder.com/100" alt="Character Avatar" style="border-radius: 50%;" />
+        <p><strong>@CharacterName</strong></p>
+    </div>
+
+    <div style="margin-top: 20px;">
+        <h3>Your Action</h3>
+        <input @bind="UserAction" @onkeypress="HandleKeyPress" placeholder="Type your action and press Enter" style="width: 100%; padding: 10px;" />
+    </div>
+
 </div>
 
 @code {
@@ -46,7 +50,7 @@
 
     private async Task HandleKeyPress(KeyboardEventArgs e)
     {
-        if (e.Key == "Enter")
+        if (e.Key == "A")
         {
             if (!string.IsNullOrWhiteSpace(UserAction))
             {
