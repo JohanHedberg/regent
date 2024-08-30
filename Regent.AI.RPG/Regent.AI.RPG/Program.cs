@@ -1,4 +1,5 @@
 using Regent.AI.RPG.Components;
+using Regent.AI.RPG.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,8 +19,17 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseStaticFiles();
+app.UseRouting();
 app.UseAntiforgery();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapBlazorHub();
+    //endpoints.MapFallbackToPage("/_Host");
+    endpoints.MapHub<GameMasterService>("/gameHub");
+});
+
+app.UseStaticFiles();
+
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
