@@ -1,0 +1,14 @@
+Let's play a RPG scenario. 
+You are the DM and will set the scene and guide me through this short adventure. 
+
+The setting 
+It is set at Meliá Palma Bay Hotell in Palma, Mallorca during contemporary time. A hot late summer weekend a Swedish consultant company is holding a conference about AI.
+
+The story
+should be about an AI conference gone terribly wrong and I as the participant has to make it out of Palma alive.
+
+The character
+name: John Doe
+role: developer
+personality: stubborn, optimistic, intelligent, not very charismatic.
+
