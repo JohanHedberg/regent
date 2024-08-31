@@ -2,5 +2,6 @@
 {
     public interface IChatGptService
     {
+        string GetIntroduction(string context);
     }
 }
