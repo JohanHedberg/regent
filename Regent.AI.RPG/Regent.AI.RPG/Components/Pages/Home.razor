@@ -20,7 +20,7 @@
 
     <div style="margin-top: 20px;">
         <h3>Your Action</h3>
-        <input @bind="UserAction" @onkeypress="HandleKeyPress" placeholder="Type your action and press Enter" style="width: 100%; padding: 10px;" />
+        <input @bind="UserAction" @onkeydown="HandleKeyPress" style="width: 100%; padding: 10px;" />
     </div>
 
 </div>
@@ -50,12 +50,14 @@
 
     private async Task HandleKeyPress(KeyboardEventArgs e)
     {
-        if (e.Key == "A")
+        Console.WriteLine($"HandleKeyPress fired!");
+
+        if (e.Key == "Enter")
         {
             if (!string.IsNullOrWhiteSpace(UserAction))
             {
                 // Send the user's action to the server
-                await hubConnection.SendAsync("SendAction", CharacterName, UserAction);
+                await hubConnection!.SendAsync("SendAction", CharacterName, UserAction);
 
                 // Clear the input field
                 UserAction = string.Empty;

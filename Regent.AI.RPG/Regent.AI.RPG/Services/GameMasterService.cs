@@ -5,9 +5,9 @@ namespace Regent.AI.RPG.Services
     public class GameMasterService : Hub
     {
         private static string narrative = "Welcome to the adventure!";
-        private readonly ChatGptService _chatGpt;
+        private readonly IChatGptService _chatGpt;
 
-        public GameMasterService(ChatGptService chatGpt)
+        public GameMasterService(IChatGptService chatGpt)
         {
             var prompt = "CREATE a sce";
 

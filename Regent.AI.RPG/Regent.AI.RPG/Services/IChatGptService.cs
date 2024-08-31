@@ -1,6 +1,6 @@
 ﻿namespace Regent.AI.RPG.Services
 {
-    public class ChatGptService : IChatGptService
+    public interface IChatGptService
     {
     }
 }
