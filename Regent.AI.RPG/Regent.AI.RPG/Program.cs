@@ -26,9 +26,9 @@ app.UseStaticFiles();
 app.UseAntiforgery();
 app.UseEndpoints(endpoints =>
 { 
-//    endpoints.MapBlazorHub();
+    //endpoints.MapBlazorHub();
 //    //endpoints.MapFallbackToPage("/_Host");
-//    endpoints.MapHub<GameMasterService>("/gameHub");
+    endpoints.MapHub<GameMasterService>("/gameHub");
 });
 
 app.MapRazorComponents<App>()

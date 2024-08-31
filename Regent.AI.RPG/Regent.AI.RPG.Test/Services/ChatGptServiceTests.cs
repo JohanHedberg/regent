@@ -13,7 +13,8 @@ namespace Regent.AI.RPG.Test.Services
 
         public ChatGptServiceTests()
         {
-            _subject = new ChatGptService();
+            var httpClient = new HttpClient();
+            _subject = new ChatGptService(httpClient);
         }
     }
 }

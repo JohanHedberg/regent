@@ -1,4 +1,5 @@
-﻿using Regent.AI.RPG.Services;
+﻿using Moq;
+using Regent.AI.RPG.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,8 @@ namespace Regent.AI.RPG.Test.Services
 
         public GameMasterServiceTests()
         {
-            _subject = new GameMasterService();
+            var _chatGtpMock = new Mock<IChatGptService>();
+            _subject = new GameMasterService(_chatGtpMock.Object);
         }
     }
 }
