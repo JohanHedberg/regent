@@ -4,6 +4,6 @@
     {
         Task<string> GetIntroduction(string context);
 
-        Task<string> ProcessPlayerAction(string context);
+        Task<string> ProcessPlayerAction(string context, string playerName, string action);
     }
 }
