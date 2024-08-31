@@ -5,7 +5,7 @@ namespace Regent.AI.RPG.Services
     public class GameMasterService : Hub
     {
         private static string narrative = "Welcome to the adventure!";
-
+        private string gameContext = "";
         private static string ChatGPTGameSetupString = @"Let's play a RPG scenario. 
         You are the DM and will set the scene and guide me through this short adventure. 
         The setting 
@@ -17,10 +17,9 @@ namespace Regent.AI.RPG.Services
 
         public GameMasterService(IChatGptService chatGpt)
         {
-            var prompt = "CREATE a sce";
-
             _chatGpt = chatGpt;
-                
+            gameContext = _chatGpt.GetIntroduction(ChatGPTGameSetupString).Result;
+
         }
         public async Task SendAction(string playerName, string action)
         {
