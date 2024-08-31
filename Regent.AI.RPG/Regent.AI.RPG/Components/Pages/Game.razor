@@ -6,25 +6,24 @@
 @inject Regent.AI.RPG.Services.GameMasterService GameMaster
 
 <div class="main-container">
+    <h1 class="title">AI-Driven RPG Game</h1>
 
-    <h1 style="text-align: center;">AI-Driven RPG Game</h1>
-
-    <div style="margin-top: 20px;">
+    <div class="section narrative">
         <h2>Narrative</h2>
         <p>@NarratorText</p>
     </div>
 
-    <div style="margin-top: 20px;">
-        <h3>Your Character</h3>
-        <img src="https://via.placeholder.com/100" alt="Character Avatar" style="border-radius: 50%;" />
-        <p<input @bind="CharacterName" style="width: 100%; padding: 10px;" /></p>
+    <div class="section character">
+        <div class="character-info">
+            <img src="https://via.placeholder.com/100" alt="Character Avatar" class="character-avatar" />
+            <input @bind="CharacterName" placeholder="Enter Character Name" class="input-field" />
+        </div>
     </div>
 
-    <div style="margin-top: 20px;">
+    <div class="section action">
         <h3>Your Action</h3>
-        <input @bind="UserAction" @onkeydown="HandleKeyPress" style="width: 100%; padding: 10px;" />
+        <input @bind="UserAction" @onkeydown="HandleKeyPress" placeholder="What will you do?" class="input-field" />
     </div>
-
 </div>
 
 @code {
@@ -44,13 +43,13 @@
         // Handle receiving updated narrative from the server
         hubConnection.On<string>("ReceiveNarrative", (narrative) =>
         {
-            NarratorText = $"{NarratorText}{Environment.NewLine}{narrative}";
+            NarratorText = $"{NarratorText} {narrative}";
             InvokeAsync(StateHasChanged);
         });
 
         await hubConnection.StartAsync();
 
-        NarratorText = GameMaster.gameContext;
+        await GameMaster.StartGame();
     }
 
     private async Task HandleKeyPress(KeyboardEventArgs e)

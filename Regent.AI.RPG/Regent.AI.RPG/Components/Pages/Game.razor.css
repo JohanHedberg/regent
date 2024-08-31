@@ -1,0 +1,49 @@
+﻿.main-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    color: #fff;
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.title {
+    text-align: center;
+    color: #333;
+    font-family: 'Arial', sans-serif;
+}
+
+.section {
+    margin-top: 30px;
+}
+
+.narrative p {
+    font-size: 1.2em;
+    line-height: 1.6;
+}
+
+.character-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.character-avatar {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+}
+
+.input-field {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+
+    .input-field::placeholder {
+        color: #999;
+    }

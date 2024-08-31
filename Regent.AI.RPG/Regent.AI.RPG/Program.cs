@@ -1,9 +1,28 @@
 using Regent.AI.RPG.Components;
+using Regent.AI.RPG.OpenAI.Services;
 using Regent.AI.RPG.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddHttpClient<IChatGptService, ChatGptService>();
+builder.Services.AddHttpClient();
+
+builder.Services.AddSingleton<IOpenAIClient>(provider =>
+{
+    // Retrieve the API key from configuration
+    var apiKey = builder.Configuration["OpenAI:ApiKey"];
+    if (string.IsNullOrEmpty(apiKey))
+    {
+        throw new InvalidOperationException("OpenAI API key is not configured.");
+    }
+
+    // Get the HttpClientFactory service
+    var httpClientFactory = provider.GetRequiredService<IHttpClientFactory>();
+
+    // Create and return the OpenAIClient instance
+    return new OpenAIClient(httpClientFactory, apiKey);
+});
+
+builder.Services.AddSingleton<IChatGptService, ChatGptService>();
 builder.Services.AddSingleton<GameMasterService>();
 
 // Add services to the container.
@@ -27,8 +46,6 @@ app.UseStaticFiles();
 app.UseAntiforgery();
 app.UseEndpoints(endpoints =>
 { 
-    //endpoints.MapBlazorHub();
-//    //endpoints.MapFallbackToPage("/_Host");
     endpoints.MapHub<GameMasterService>("/gameHub");
 });
 
