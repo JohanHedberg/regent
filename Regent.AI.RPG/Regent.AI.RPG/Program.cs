@@ -22,16 +22,14 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseRouting();
+app.UseStaticFiles();
 app.UseAntiforgery();
 app.UseEndpoints(endpoints =>
-{
-    endpoints.MapBlazorHub();
-    //endpoints.MapFallbackToPage("/_Host");
-    endpoints.MapHub<GameMasterService>("/gameHub");
+{ 
+//    endpoints.MapBlazorHub();
+//    //endpoints.MapFallbackToPage("/_Host");
+//    endpoints.MapHub<GameMasterService>("/gameHub");
 });
-
-app.UseStaticFiles();
-
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();

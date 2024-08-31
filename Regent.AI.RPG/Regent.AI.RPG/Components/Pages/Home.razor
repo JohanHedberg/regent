@@ -1,7 +1,8 @@
 ﻿@page "/"
+@rendermode InteractiveServer
 
-@using Microsoft.AspNetCore.SignalR.Client
-@inject NavigationManager Navigation
+@* @using Microsoft.AspNetCore.SignalR.Client
+@inject NavigationManager Navigation *@
 
 <div class="main-container">
 
@@ -9,67 +10,68 @@
 
     <div style="margin-top: 20px;">
         <h2>Narrative</h2>
-        <p>@NarratorText</p>
+        <p>NarratorText</p>
     </div>
 
     <div style="margin-top: 20px;">
         <h3>Your Character</h3>
         <img src="https://via.placeholder.com/100" alt="Character Avatar" style="border-radius: 50%;" />
-        <p><strong>@CharacterName</strong></p>
+        <p><strong>CharacterName</strong></p>
     </div>
 
     <div style="margin-top: 20px;">
         <h3>Your Action</h3>
-        <input @bind="UserAction" @onkeydown="HandleKeyPress" style="width: 100%; padding: 10px;" />
+        <input @onkeydown="HandleKeyPress" style="width: 100%; padding: 10px;" />
     </div>
 
 </div>
 
 @code {
-    private HubConnection? hubConnection;
-    private string NarratorText = "Welcome to the adventure!";
-    private string CharacterName = "YourCharacter"; // Replace with actual character name
-    private string UserAction = "";
+    
+    // private HubConnection? hubConnection;
+    // private string NarratorText = "Welcome to the adventure!";
+    // private string CharacterName = "YourCharacter"; // Replace with actual character name
+    // private string UserAction = "";
 
-    protected override async Task OnInitializedAsync()
-    {
-        // Initialize SignalR connection
-        hubConnection = new HubConnectionBuilder()
-            .WithUrl(Navigation.ToAbsoluteUri("/gameHub"))
-            .Build();
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     // Initialize SignalR connection
+    //     hubConnection = new HubConnectionBuilder()
+    //         .WithUrl(Navigation.ToAbsoluteUri("/gameHub"))
+    //         .Build();
 
-        // Handle receiving updated narrative from the server
-        hubConnection.On<string>("ReceiveNarrative", (narrative) =>
-        {
-            NarratorText = narrative;
-            InvokeAsync(StateHasChanged);
-        });
+    //     // Handle receiving updated narrative from the server
+    //     hubConnection.On<string>("ReceiveNarrative", (narrative) =>
+    //     {
+    //         NarratorText = narrative;
+    //         InvokeAsync(StateHasChanged);
+    //     });
 
-        await hubConnection.StartAsync();
-    }
+    //     await hubConnection.StartAsync();
+    // }
 
-    private async Task HandleKeyPress(KeyboardEventArgs e)
+    private void HandleKeyPress(KeyboardEventArgs e)
     {
         Console.WriteLine($"HandleKeyPress fired!");
 
         if (e.Key == "Enter")
         {
-            if (!string.IsNullOrWhiteSpace(UserAction))
-            {
-                // Send the user's action to the server
-                await hubConnection!.SendAsync("SendAction", CharacterName, UserAction);
+            // if (!string.IsNullOrWhiteSpace(UserAction))
+            // {
+            //     // Send the user's action to the server
+            //     await hubConnection!.SendAsync("SendAction", CharacterName, UserAction);
 
-                // Clear the input field
-                UserAction = string.Empty;
-            }
+            //     // Clear the input field
+            //     UserAction = string.Empty;
+            // }
         }
     }
 
-    public async ValueTask DisposeAsync()
-    {
-        if (hubConnection != null)
-        {
-            await hubConnection.DisposeAsync();
-        }
-    }
+    // public async ValueTask DisposeAsync()
+    // {
+    //     if (hubConnection != null)
+    //     {
+    //         await hubConnection.DisposeAsync();
+    //     }
+    // }
 }
