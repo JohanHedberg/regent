@@ -2,8 +2,8 @@
 {
     public interface IChatGptService
     {
-        string GetIntroduction(string context);
+        Task<string> GetIntroduction(string context);
 
-        string ProcessPlayerAction(string context);
+        Task<string> ProcessPlayerAction(string context);
     }
 }

@@ -3,7 +3,7 @@ using Regent.AI.RPG.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton<IChatGptService, ChatGptService>();
+builder.Services.AddHttpClient<IChatGptService, ChatGptService>();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
