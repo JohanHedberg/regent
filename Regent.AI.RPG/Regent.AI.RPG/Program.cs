@@ -4,6 +4,7 @@ using Regent.AI.RPG.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddHttpClient<IChatGptService, ChatGptService>();
+builder.Services.AddSingleton<GameMasterService>();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()

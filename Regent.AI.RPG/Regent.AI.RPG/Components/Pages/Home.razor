@@ -3,6 +3,7 @@
 
 @using Microsoft.AspNetCore.SignalR.Client
 @inject NavigationManager Navigation
+@inject Regent.AI.RPG.Services.GameMasterService GameMaster
 
 <div class="main-container">
 
@@ -10,13 +11,13 @@
 
     <div style="margin-top: 20px;">
         <h2>Narrative</h2>
-        <p>NarratorText</p>
+        <p>@NarratorText</p>
     </div>
 
     <div style="margin-top: 20px;">
         <h3>Your Character</h3>
         <img src="https://via.placeholder.com/100" alt="Character Avatar" style="border-radius: 50%;" />
-        <p><strong>CharacterName</strong></p>
+        <p<input @bind="CharacterName" style="width: 100%; padding: 10px;" /></p>
     </div>
 
     <div style="margin-top: 20px;">
@@ -29,8 +30,8 @@
 @code {
 
     private HubConnection? hubConnection;
-    private string NarratorText = "Welcome to the adventure!";
-    private string CharacterName = "YourCharacter"; // Replace with actual character name
+    private string NarratorText = "";
+    private string CharacterName = "Your Character"; // Replace with actual character name
     private string UserAction = "";
 
     protected override async Task OnInitializedAsync()
@@ -43,11 +44,13 @@
         // Handle receiving updated narrative from the server
         hubConnection.On<string>("ReceiveNarrative", (narrative) =>
         {
-            NarratorText = narrative;
+            NarratorText = $"{NarratorText}{Environment.NewLine}{narrative}";
             InvokeAsync(StateHasChanged);
         });
 
         await hubConnection.StartAsync();
+
+        NarratorText = GameMaster.gameContext;
     }
 
     private async Task HandleKeyPress(KeyboardEventArgs e)
