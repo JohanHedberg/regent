@@ -52,7 +52,7 @@ namespace Regent.AI.RPG.Services
             }
         }
 
-        public async Task<string> ProcessPlayerAction(string context)
+        public async Task<string> ProcessPlayerAction(string context, string playerName, string action)
         {
             // This function will also interact with OpenAI to continue the conversation based on player's action
             _conversationHistory += $"Player: {context}\n";
